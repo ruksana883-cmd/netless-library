@@ -325,7 +325,79 @@ video {
 
 }
 
+/* RECORD RECOGNITION SECTION */
 
+.recognition-section {
+    padding: 70px 20px;
+    text-align: center;
+    background: #f8fbfc;
+}
+
+.recognition-container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.recognition-label {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 30px;
+    background: #eaf4f6;
+    color: #2f7180;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.recognition-section h2 {
+    font-size: 36px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    color: #263b50;
+}
+
+.recognition-section > .recognition-container > p {
+    max-width: 700px;
+    margin: auto;
+    color: #5d6b78;
+    line-height: 1.7;
+}
+
+.recognition-cards {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.recognition-card {
+    width: 280px;
+    padding: 30px 25px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.recognition-card:hover {
+    transform: translateY(-5px);
+}
+
+.record-icon {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+
+.recognition-card h3 {
+    color: #263b50;
+    margin-bottom: 8px;
+}
+
+.recognition-card p {
+    color: #6c7a86;
+    font-size: 14px;
+}
 .primary-button {
 
     background: #287f91;
