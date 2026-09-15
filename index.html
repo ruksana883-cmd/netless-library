@@ -1,267 +1,293 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Netless Library — Knowledge Without Internet</title>
-<meta name="description" content="Netless Library is an ultra-low-cost portable digital library that creates its own Wi-Fi network, giving learners access to 100,000 educational resources with no internet, no router, and no setup.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2316303F'/%3E%3Cpath d='M8 9c3-1.6 6-1.6 8 0v15c-2-1.6-5-1.6-8 0Zm16 0c-3-1.6-6-1.6-8 0v15c2-1.6 5-1.6 8 0Z' fill='%23C98A3D'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Netless Library | Knowledge Without Internet</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<a class="skip-link" href="#main">Skip to content</a>
-
-<!-- ============ ICON SPRITE (schematic line-icon system) ============ -->
-<svg class="icon-sprite" aria-hidden="true">
-  <defs>
-    <symbol id="icon-book" viewBox="0 0 24 24">
-      <path d="M3 5.5C5.5 4 8.3 4 11 5.2v14C8.3 18 5.5 18 3 19.5Z"/>
-      <path d="M21 5.5C18.5 4 15.7 4 13 5.2v14c2.7-1.2 5.5-1.2 8 .3Z"/>
-    </symbol>
-    <symbol id="icon-wifi-off" viewBox="0 0 24 24">
-      <path d="M2 8.5c2.8-2.3 6.3-3.6 10-3.6M22 8.5a17 17 0 0 0-5.2-3.1"/>
-      <path d="M5.5 12.3a11.6 11.6 0 0 1 6-2M18.5 12.3a11.6 11.6 0 0 0-3-1.7"/>
-      <path d="M9 16a5.4 5.4 0 0 1 6 0"/>
-      <circle cx="12" cy="19.3" r="1.15" fill="currentColor" stroke="none"/>
-      <path d="M3 3 21 21" stroke-width="1.6"/>
-    </symbol>
-    <symbol id="icon-signal" viewBox="0 0 24 24">
-      <path d="M4 10.5a11.6 11.6 0 0 1 16 0"/>
-      <path d="M7.3 14a7.2 7.2 0 0 1 9.4 0"/>
-      <path d="M10.4 17.4a2.9 2.9 0 0 1 3.2 0"/>
-      <circle cx="12" cy="20" r="1.15" fill="currentColor" stroke="none"/>
-    </symbol>
-    <symbol id="icon-chip" viewBox="0 0 24 24">
-      <rect x="7" y="7" width="10" height="10" rx="1.5"/>
-      <path d="M9.5 7V4M14.5 7V4M9.5 20v-3M14.5 20v-3M7 9.5H4M7 14.5H4M20 9.5h-3M20 14.5h-3"/>
-    </symbol>
-    <symbol id="icon-phone" viewBox="0 0 24 24">
-      <rect x="6.5" y="3" width="11" height="18" rx="2.2"/>
-      <path d="M10.5 18h3" stroke-width="1.8"/>
-    </symbol>
-    <symbol id="icon-bolt" viewBox="0 0 24 24">
-      <path d="M13 3 5 13h5.5L11 21l8-11h-5.5Z" stroke-linejoin="round"/>
-    </symbol>
-    <symbol id="icon-box" viewBox="0 0 24 24">
-      <path d="M4 8 12 4l8 4-8 4Z" stroke-linejoin="round"/>
-      <path d="M4 8v8l8 4 8-4V8M12 12v8"/>
-    </symbol>
-    <symbol id="icon-no-server" viewBox="0 0 24 24">
-      <rect x="5" y="4.5" width="14" height="6" rx="1.3"/>
-      <rect x="5" y="13.5" width="14" height="6" rx="1.3"/>
-      <path d="M8 7.5h.01M8 16.5h.01" stroke-width="2.4" stroke-linecap="round"/>
-      <path d="M3 3 21 21" stroke-width="1.6"/>
-    </symbol>
-    <symbol id="icon-tap" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="3.4"/>
-      <path d="M12 3.5v2.3M12 18.2v2.3M20.5 12h-2.3M5.8 12H3.5M17.7 6.3l-1.6 1.6M7.9 16.1l-1.6 1.6M17.7 17.7l-1.6-1.6M7.9 7.9 6.3 6.3"/>
-    </symbol>
-    <symbol id="icon-cap" viewBox="0 0 24 24">
-      <path d="M2 9.5 12 5l10 4.5-10 4.5Z" stroke-linejoin="round"/>
-      <path d="M6.5 11.6v4.3c0 1.4 2.5 2.6 5.5 2.6s5.5-1.2 5.5-2.6v-4.3M21 9.5v5.6" stroke-linecap="round"/>
-    </symbol>
-    <symbol id="icon-arrow" viewBox="0 0 24 24">
-      <path d="M4 12h16M13 5l7 7-7 7"/>
-    </symbol>
-    <symbol id="icon-mail" viewBox="0 0 24 24">
-      <rect x="3.5" y="5.5" width="17" height="13" rx="2"/>
-      <path d="m4.5 7 7.5 6 7.5-6"/>
-    </symbol>
-    <symbol id="icon-play" viewBox="0 0 24 24">
-      <path d="M8 5.5v13l11-6.5Z" stroke-linejoin="round" fill="currentColor" stroke="none"/>
-    </symbol>
-    <symbol id="icon-medal" viewBox="0 0 24 24">
-      <circle cx="12" cy="14" r="6.2"/>
-      <path d="m9 8-3-5.5M15 8l3-5.5M8 14.3l2.6 2.4L16 11" stroke-linecap="round" stroke-linejoin="round"/>
-    </symbol>
-    <symbol id="icon-menu" viewBox="0 0 24 24">
-      <path d="M4 7h16M4 12h16M4 17h16"/>
-    </symbol>
-    <symbol id="icon-close" viewBox="0 0 24 24">
-      <path d="M5 5 19 19M19 5 5 19"/>
-    </symbol>
-  </defs>
-</svg>
-
-<!-- ============ NAV ============ -->
 <header class="navbar">
   <div class="nav-container">
-    <a href="#home" class="logo">
-      <svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-book"/></svg>
-      Netless <em>Library</em>
-    </a>
+    <a href="#home" class="logo">📚 <span>NETLESS <strong>LIBRARY</strong></span></a>
 
-    <nav class="nav-links" id="nav-links">
+    <nav class="nav-links">
       <a href="#home">Home</a>
-      <a href="#idea">Why Netless</a>
-      <a href="#how-it-works">How it works</a>
+      <a href="#idea">Why Netless?</a>
+      <a href="#how-it-works">How It Works</a>
       <a href="#demo">Demo</a>
       <a href="#impact">Impact</a>
       <a href="#contact">Contact</a>
     </nav>
-
-    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-menu"/></svg>
-    </button>
   </div>
 </header>
 
-<main id="main">
 
-<!-- ============ HERO ============ -->
+<!-- HERO -->
 <section class="hero" id="home">
-  <div class="container hero-grid">
+  <div class="container">
 
     <div class="hero-intro">
-      <p class="kicker"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-wifi-off"/></svg>No internet required</p>
+      <div class="badge">📡 Portable • Offline • Internet-Free</div>
 
-      <h1>A library that doesn't need<br>the internet.</h1>
+      <h1>Knowledge Without<br><span>The Internet.</span></h1>
 
       <p class="hero-description">
-        Netless Library is a palm-sized device that creates its own Wi-Fi network
-        and puts 100,000 educational resources within reach — no mobile data, no
-        router, no computer to configure. Just power it on.
+        Netless Library is an ultra-low-cost portable digital library that creates
+        its own Wi-Fi network, allowing learners to access educational resources
+        without Internet connectivity, mobile data, or an external router.
       </p>
 
       <div class="hero-buttons">
-        <a href="#demo" class="btn btn-primary">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-play"/></svg>
-          Watch the demo
-        </a>
-        <a href="#how-it-works" class="btn btn-secondary">How it works</a>
+        <a href="#demo" class="primary-button">Watch Demo ▶</a>
+        <a href="#idea" class="secondary-button">Explore Innovation</a>
       </div>
-
-      <p class="hero-proof">Already teaching <strong>200 students</strong> at a government school and <strong>5,000 students</strong> at a college campus.</p>
     </div>
 
-    <div class="hero-visual">
-      <p class="showcase-label">Watch it in action</p>
-      <div class="video-card hero-video-card">
-        <video controls preload="metadata">
-          <source src="demo.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-      </div>
 
-      <div class="device-card">
-        <div class="device-card-frame">
-          <span class="stamp-corner">Netless · No. 01</span>
-          <img src="product_image.png" alt="The Netless Library device — a small white USB-powered unit" class="device-image">
-          <div class="signal-pulse" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><use href="#icon-signal"/></svg>
+    <!-- 60% VIDEO + 40% DEVICE -->
+    <div class="product-showcase">
+
+      <div class="video-column">
+        <p class="showcase-label">▶ WATCH IT IN ACTION</p>
+
+        <div class="video-card hero-video-card">
+          <video controls preload="metadata">
+            <source src="demo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+
+          <div class="video-caption">
+            <div class="play-circle">▶</div>
+            <div>
+              <h3>See Netless Library in Action</h3>
+              <p>A complete offline digital library in an incredibly small device.</p>
+            </div>
           </div>
         </div>
-        <p class="device-caption">The whole library, in your palm.</p>
       </div>
+
+
+      <div class="device-column">
+        <p class="showcase-label">THE DEVICE</p>
+
+        <img src="product_image.png"
+             alt="Netless Library portable device"
+             class="device-image">
+
+        <div class="device-tag">✓ Portable Learning Device</div>
+      </div>
+
     </div>
 
-  </div>
 
-  <!-- spec strip -->
-  <div class="spec-strip">
-    <div class="container spec-strip-inner">
-      <div class="spec"><span class="spec-value">~$10</span><span class="spec-label">Per device</span></div>
-      <div class="spec"><span class="spec-value">256 GB</span><span class="spec-label">Storage</span></div>
-      <div class="spec"><span class="spec-value">Low power</span><span class="spec-label">USB-run</span></div>
-      <div class="spec"><span class="spec-value">6×3.5×3 cm</span><span class="spec-label">Enclosure</span></div>
-      <div class="spec"><span class="spec-value">2 parts</span><span class="spec-label">ESP32 + microSD</span></div>
-      <div class="spec"><span class="spec-value">No Linux</span><span class="spec-label">Zero setup</span></div>
+    <!-- BIG HIGHLIGHTS -->
+    <div class="highlights-grid">
+
+      <div class="highlight-card featured-price">
+        <div class="highlight-icon">💵</div>
+        <div>
+          <strong>~$10</strong>
+          <span>Ultra-Low-Cost</span>
+        </div>
+      </div>
+
+      <div class="highlight-card featured-storage">
+        <div class="highlight-icon">💾</div>
+        <div>
+          <strong>256 GB</strong>
+          <span>Massive Storage</span>
+        </div>
+      </div>
+
+      <div class="highlight-card">
+        <div class="highlight-icon">⚡</div>
+        <div>
+          <strong>LOW POWER</strong>
+          <span>Energy Efficient</span>
+        </div>
+      </div>
+
+      <div class="highlight-card">
+        <div class="highlight-icon">📦</div>
+        <div>
+          <strong>VERY SMALL</strong>
+          <span>Ultra-Compact</span>
+        </div>
+      </div>
+
+      <div class="highlight-card">
+        <div class="highlight-icon">🔧</div>
+        <div>
+          <strong>MINIMAL</strong>
+          <span>ESP32 + microSD</span>
+        </div>
+      </div>
+
+      <div class="highlight-card">
+        <div class="highlight-icon">🚫</div>
+        <div>
+          <strong>NO LINUX</strong>
+          <span>No Complex Setup</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
 
-<!-- ============ WHY NETLESS (merged idea + why) ============ -->
-<section class="idea-section" id="idea">
+<!-- INNOVATION -->
+<section class="innovation-section" id="idea">
   <div class="container">
 
-    <div class="section-intro">
-      <p class="eyebrow">The idea</p>
-      <h2>Big knowledge, built from<br>almost nothing.</h2>
-      <p>Most offline-library projects start with a computer and strip things down. Netless started with two parts and asked how much learning they could carry.</p>
+    <div class="center-heading">
+      <p class="section-label">THE INNOVATION</p>
+      <h2>Big Knowledge. <span>Tiny Hardware.</span></h2>
+      <p>An ultra-minimal approach to offline digital learning.</p>
     </div>
 
-    <div class="pillars-grid">
-      <article class="pillar-card">
-        <svg class="pillar-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-chip"/></svg>
-        <h3>Ultra-minimal hardware</h3>
-        <p>Just an ESP32 microcontroller and a 256 GB microSD card — no Linux computer, no server, no external router.</p>
-      </article>
-      <article class="pillar-card">
-        <svg class="pillar-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-wifi-off"/></svg>
-        <h3>Genuinely offline</h3>
-        <p>Netless creates its own local Wi-Fi network. No internet connection or mobile data ever enters the picture.</p>
-      </article>
-      <article class="pillar-card">
-        <svg class="pillar-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-phone"/></svg>
-        <h3>Works with what students have</h3>
-        <p>Any phone, tablet, or laptop connects through a standard browser — no app to install, nothing to learn.</p>
-      </article>
-    </div>
+    <div class="innovation-grid">
 
-    <div class="chips-row">
-      <div class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-box"/></svg>Ultra-compact, fits in a palm</div>
-      <div class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-signal"/></svg>~30 m range, 20–40 students at once</div>
-      <div class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-no-server"/></svg>No Linux install, ever</div>
-      <div class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-tap"/></svg>Online in one tap via QR code</div>
-    </div>
+      <article class="innovation-card">
+        <div class="innovation-icon">🔧</div>
+        <h3>Ultra-Minimal Hardware</h3>
+        <p>Built using only an ESP32 and a 256-GB microSD card, eliminating the need for a Linux-based computer or complex server setup.</p>
+      </article>
 
+      <article class="innovation-card">
+        <div class="innovation-icon">💰</div>
+        <h3>Approximately $10–11</h3>
+        <p>An ultra-low-cost and low-power educational technology solution designed to make offline learning more accessible.</p>
+      </article>
+
+      <article class="innovation-card">
+        <div class="innovation-icon">🚫🌐</div>
+        <h3>No Internet Required</h3>
+        <p>No external router, Internet connection, or mobile data is required for learners to access the library.</p>
+      </article>
+
+      <article class="innovation-card">
+        <div class="innovation-icon">🐧🚫</div>
+        <h3>No Linux Required</h3>
+        <p>No Linux computer, complex server, or complicated software installation is needed for learners.</p>
+      </article>
+
+      <article class="innovation-card">
+        <div class="innovation-icon">📶</div>
+        <h3>Classroom Ready</h3>
+        <p>Approximately 30 metres of Wi-Fi range and support for approximately 20–40 simultaneous students based on testing.</p>
+      </article>
+
+      <article class="innovation-card">
+        <div class="innovation-icon">📱</div>
+        <h3>One-Click Access</h3>
+        <p>Students can use existing phones, tablets, or laptops through a standard web browser with no dedicated app.</p>
+      </article>
+
+    </div>
   </div>
 </section>
 
 
-<!-- ============ HOW IT WORKS ============ -->
+<!-- WHY NETLESS -->
+<section class="why-section">
+  <div class="container">
+
+    <div class="section-heading">
+      <p class="section-label">WHY NETLESS?</p>
+      <h2>A Library That Travels <span>Where the Internet Cannot.</span></h2>
+      <p>
+        Netless Library brings educational resources directly to learners through
+        a compact, portable offline device.
+      </p>
+    </div>
+
+    <div class="features-grid">
+
+      <article class="feature-card">
+        <div class="feature-icon">📡</div>
+        <h3>No Internet Required</h3>
+        <p>Creates its own local Wi-Fi network for easy offline access.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">📚</div>
+        <h3>Educational Content</h3>
+        <p>Access learning resources, documents, and digital content offline.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Any Device</h3>
+        <p>Works with phones, tablets, and laptops through a standard browser.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">🌱</div>
+        <h3>Ultra-Low Cost</h3>
+        <p>Designed to make educational access more affordable and accessible.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- HOW IT WORKS -->
 <section class="how-section" id="how-it-works">
   <div class="container">
-    <div class="section-intro center">
-      <p class="eyebrow">How it works</p>
-      <h2>Learning in three simple steps.</h2>
+
+    <div class="center-heading">
+      <p class="section-label">HOW IT WORKS</p>
+      <h2>Learning in <span>Three Simple Steps.</span></h2>
     </div>
 
-    <div class="steps-row">
+    <div class="steps-grid">
+
       <article class="step-card">
-        <span class="step-index">1</span>
-        <svg class="step-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-bolt"/></svg>
-        <h3>Power on</h3>
-        <p>Connect the compact Netless device to any USB power source — a wall adapter or power bank.</p>
+        <div class="step-number">1</div>
+        <h3>Power On</h3>
+        <p>Connect the compact Netless Library device to a power source.</p>
       </article>
+
       <article class="step-card">
-        <span class="step-index">2</span>
-        <svg class="step-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-signal"/></svg>
+        <div class="step-number">2</div>
         <h3>Connect</h3>
-        <p>Students join the Netless Wi-Fi network from their own phone, tablet, or laptop — no password hassle.</p>
+        <p>Students connect their phone, tablet, or laptop to the Netless Wi-Fi network.</p>
       </article>
+
       <article class="step-card">
-        <span class="step-index">3</span>
-        <svg class="step-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-book"/></svg>
+        <div class="step-number">3</div>
         <h3>Learn</h3>
-        <p>Open a standard browser and the full offline library loads instantly. That's the whole process.</p>
+        <p>Open a standard browser and access educational resources without Internet connectivity.</p>
       </article>
+
     </div>
   </div>
 </section>
 
 
-<!-- ============ DEMO ============ -->
+<!-- DEMO -->
 <section class="videos-section" id="demo">
   <div class="container">
-    <div class="section-intro center">
-      <p class="eyebrow">See it in action</p>
-      <h2>Netless Library, demonstrated.</h2>
+
+    <div class="center-heading">
+      <p class="section-label">SEE IT IN ACTION</p>
+      <h2>Netless Library <span>Demonstrations.</span></h2>
     </div>
 
     <div class="demo-grid">
+
       <article class="demo-card">
         <video controls preload="metadata">
           <source src="demo.mp4" type="video/mp4">
         </video>
         <div class="demo-content">
           <h3>Connecting to Netless Library</h3>
-          <p>See how learners join the offline Wi-Fi network from a phone.</p>
+          <p>See how learners connect to the offline Wi-Fi network.</p>
         </div>
       </article>
 
@@ -270,8 +296,8 @@
           <source src="cabin-demo.mp4" type="video/mp4">
         </video>
         <div class="demo-content">
-          <h3>The device, up close</h3>
-          <p>A closer look at the portable digital library hardware.</p>
+          <h3>Netless Library Demonstration</h3>
+          <p>Explore the portable digital library device.</p>
         </div>
       </article>
 
@@ -280,119 +306,102 @@
           <source src="qr code explain.mp4" type="video/mp4">
         </video>
         <div class="demo-content">
-          <h3>The one-scan connection</h3>
-          <p>Scan, connect, and the library opens — in under a minute.</p>
+          <h3>Quick QR Connection</h3>
+          <p>Connect quickly and access the library.</p>
         </div>
       </article>
+
     </div>
   </div>
 </section>
 
 
-<!-- ============ IMPACT (real deployment numbers) ============ -->
+<!-- IMPACT -->
 <section class="impact-section" id="impact">
   <div class="container impact-container">
-    <p class="eyebrow eyebrow-light">Where it's working today</p>
-    <h2>Not a concept.<br>Already in daily use.</h2>
-    <p class="impact-description">Two live deployments are putting Netless Library in front of real students every day.</p>
+
+    <p class="section-label">OUR IMPACT</p>
+    <h2>Small Device. <span>Brighter Futures.</span></h2>
+    <p class="impact-description">
+      Netless Library aims to make educational knowledge accessible wherever learners are.
+    </p>
 
     <div class="impact-grid">
-      <div class="impact-item">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-cap"/></svg>
-        <strong>200</strong>
-        <span>Students at a government school</span>
-      </div>
-      <div class="impact-item">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-cap"/></svg>
-        <strong>5,000</strong>
-        <span>Students at a college campus</span>
-      </div>
-      <div class="impact-item">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-book"/></svg>
-        <strong>100k</strong>
-        <span>Educational resources on board</span>
-      </div>
-      <div class="impact-item">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-wifi-off"/></svg>
-        <strong>0</strong>
-        <span>Internet connections required</span>
-      </div>
+      <div class="impact-item"><strong>0</strong><span>Internet Required</span></div>
+      <div class="impact-item"><strong>1</strong><span>Ultra-Compact Device</span></div>
+      <div class="impact-item"><strong>256</strong><span>GB Storage</span></div>
+      <div class="impact-item"><strong>∞</strong><span>Learning Possibilities</span></div>
     </div>
 
-    <p class="impact-next">Next: more schools and colleges, disaster-prone areas, underprivileged communities, emerging markets, and tribal and remote groups.</p>
   </div>
 </section>
 
 
-<!-- ============ RECOGNITION ============ -->
-<section class="recognition-section">
-  <div class="container recognition-container">
-    <p class="eyebrow">Record recognition</p>
-    <h2>An idea worth putting on the record.</h2>
-    <p class="recognition-description">Netless Library has been recognized for its contribution to accessible, offline education technology.</p>
-
-    <div class="stamp-row">
-      <div class="stamp">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-medal"/></svg>
-        <h3>India Book of Records</h3>
-        <p>Official record recognition</p>
-      </div>
-      <div class="stamp">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-medal"/></svg>
-        <h3>Asia Book of Records</h3>
-        <p>Official record recognition</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ============ CONTACT ============ -->
+<!-- CONTACT -->
 <section class="contact-section" id="contact">
   <div class="contact-container">
-    <svg class="contact-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-mail"/></svg>
-    <p class="eyebrow">Get in touch</p>
-    <h2>Have a question about<br>Netless Library?</h2>
+
+    <div class="contact-icon">✉</div>
+    <p class="contact-eyebrow">GET IN TOUCH</p>
+
+    <h2>Have a Question About<br>Netless Library?</h2>
+
     <p class="contact-description">
-      Technology, deployments, partnerships, or something else — we're glad to talk it through.
+      Want to know more about the technology, features, educational applications,
+      implementation, or collaboration opportunities? We'd be happy to hear from you.
     </p>
-    <a class="btn btn-primary" href="mailto:ruksana883@gmail.com?subject=Query%20About%20Netless%20Library">
-      Email your query
-      <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow"/></svg>
+
+    <a class="contact-button"
+       href="mailto:ruksana883@gmail.com?subject=Query%20About%20Netless%20Library">
+       Email Your Query <span>→</span>
     </a>
-    <p class="contact-note">Opens your email app, addressed to ruksana883@gmail.com.</p>
+
+    <p class="contact-note">Click the button to open your email application.</p>
+
   </div>
 </section>
 
-</main>
+
+<!-- RECORD RECOGNITION — LAST CONTENT SECTION -->
+<section class="recognition-section">
+  <div class="container recognition-container">
+
+    <p class="recognition-label">🏆 RECORD RECOGNITIONS</p>
+    <h2>A Record-Recognized Innovation</h2>
+
+    <p class="recognition-description">
+      Netless Library has received record recognition for its innovative contribution
+      to accessible and offline education technology.
+    </p>
+
+    <div class="recognition-cards">
+
+      <article class="recognition-card">
+        <div class="record-icon">🏆</div>
+        <h3>India Book of Records</h3>
+        <p>Official Record Recognition</p>
+      </article>
+
+      <article class="recognition-card">
+        <div class="record-icon">🌏🏆</div>
+        <h3>Asia Book of Records</h3>
+        <p>Official Record Recognition</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
 
 <footer>
   <div class="footer-content">
-    <a href="#home" class="logo footer-logo">
-      <svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-book"/></svg>
-      Netless <em>Library</em>
-    </a>
-    <p>Knowledge shouldn't depend on an internet connection.</p>
+    <h3>📚 NETLESS LIBRARY</h3>
+    <p>Knowledge should not depend on Internet connectivity.</p>
     <p class="copyright">© 2026 Netless Library. Built for accessible education.</p>
   </div>
 </footer>
 
-<script>
-  const navToggle = document.getElementById('nav-toggle');
-  const navLinks = document.getElementById('nav-links');
-  navToggle.addEventListener('click', () => {
-    const open = navLinks.classList.toggle('open');
-    navToggle.setAttribute('aria-expanded', open);
-    navToggle.innerHTML = open
-      ? '<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-close"/></svg>'
-      : '<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-menu"/></svg>';
-  });
-  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-    navToggle.setAttribute('aria-expanded', false);
-    navToggle.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-menu"/></svg>';
-  }));
-</script>
-
 </body>
 </html>
+
+
